@@ -18,11 +18,22 @@ spec:
         version: v1
     spec:
       containers:
-      - image: kannankram/user-ms
+      - image: mytest.kiwi-internal.com/ufinity_ms_enterprise/dev:201911081305
         imagePullPolicy: Always
         name: "ufinity-deployment-user-lbl"
+        env:
+        - name: DATABASE_HOST
+          value: "ufinity-test.cagh7pb9onik.ap-northeast-1.rds.amazonaws.com"
+        - name: DATABASE_NAME
+          value: "dev_enterprise_service_db"
+        - name: DATABASE_PORT
+          value: "3306"
+        - name: DATABASE_USER
+          value: "dbmaster"
+        - name: DATABASE_PASSWORD
+          value: "123456789"
         ports:
-        - containerPort: 8080
+        - containerPort: 8083
 #      imagePullSecrets:
 #        - name: regcred
 ---
@@ -36,6 +47,6 @@ spec:
   ports:
     - name: http
       port: 80
-      targetPort: 8080
+      targetPort: 8083
   selector:
     app: "ufinity-deployment-user-lbl"
