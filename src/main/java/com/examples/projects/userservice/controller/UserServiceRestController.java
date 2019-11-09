@@ -16,17 +16,17 @@ public class UserServiceRestController {
 
 
     @RequestMapping(value="/users", method= RequestMethod.GET)
-    public List<Users> getUsersList() {
-        return userServiceDAO.getUsersList();
+    public String getUsersList() {
+        return "user ms /users GET API working....";
     }
 
     @RequestMapping(value="/test", method= RequestMethod.GET)
     public String getTestUsersList() {
-        return "test";
+        return "user ms /test GET API working....";
     }
 
     @RequestMapping(value="/users", method= RequestMethod.POST)
-    public List<Users> setUsersList() {
-        return userServiceDAO.getUsersList();
+    public String setUsersList() {
+        return "user ms /users POST API working....";
     }
 }
