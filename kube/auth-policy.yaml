@@ -1,0 +1,23 @@
+apiVersion: authentication.istio.io/v1alpha1
+kind: Policy
+metadata:
+  name: auth-policy
+spec:
+  targets:
+  - name: "ufinity-deployment-record-lbl"
+  - name: "ufinity-deployment-user-lbl"
+#  peers:
+#  - mtls: {}
+  origins:
+  - jwt:
+      issuer: "https://ufinity-kc-dev.kiwi-internal.com/auth/realms/spring-boot-quickstart"
+      jwksUri: "https://ufinity-kc-dev.kiwi-internal.com/auth/realms/spring-boot-quickstart/protocol/openid-connect/certs"
+      audiences:
+      - "account"
+        #      issuer: "https://kc.krk.wtf/auth/realms/K"
+         #jwksUri: "https://kc.krk.wtf/auth/realms/K/protocol/openid-connect/certs"
+      trigger_rules:
+      - excluded_paths:
+        - exact: /ms-records/test
+        - exact: /ms-users/test
+  principalBinding: USE_ORIGIN

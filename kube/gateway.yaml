@@ -1,0 +1,50 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: ufinityistio-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ufinityistio-virtualservice
+spec:
+  gateways:
+    - ufinityistio-gateway
+  hosts:
+    - "*"
+  http:
+    - match:
+        - uri:
+            prefix: /ms-records
+      route:
+        - destination:
+            host: "ufinity-deployment-record-lbl" #Need to check
+            port:
+              number: 80
+    - match:
+        - uri:
+            prefix: /ms-users
+      route:
+        - destination:
+            host: "ufinity-deployment-user-lbl" #Need to check
+            port:
+              number: 80
+---
+#apiVersion: networking.istio.io/v1alpha3
+#kind: DestinationRule
+#metadata:
+#  name: enterprise-cb-policy
+#spec:
+#  host: ufinity-enterprise-service
+#  trafficPolicy:
+---

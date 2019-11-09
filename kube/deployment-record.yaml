@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "ufinity-deployment-record-lbl"
+  labels:
+    app: "ufinity-deployment-record-lbl"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 2
+      maxSurge: 2
+  template:
+    metadata:
+      labels:
+        app: "ufinity-deployment-record-lbl"
+        version: v1
+    spec:
+      containers:
+      - image: kannankram/record-ms
+        imagePullPolicy: Always
+        name: "ufinity-deployment-record-lbl"
+        ports:
+        - containerPort: 8080
+#      imagePullSecrets:
+#        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "ufinity-deployment-record-lbl"
+  labels:
+    app: "ufinity-deployment-record-lbl"
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    app: "ufinity-deployment-record-lbl"
