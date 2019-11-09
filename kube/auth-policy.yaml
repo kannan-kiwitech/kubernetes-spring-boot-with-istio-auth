@@ -18,6 +18,6 @@ spec:
          #jwksUri: "https://kc.krk.wtf/auth/realms/K/protocol/openid-connect/certs"
       trigger_rules:
       - excluded_paths:
-        - exact: /ms-records/test
-        - exact: /ms-users/test
+        - exact: /records/swagger*
+        - exact: /users/swagger*
   principalBinding: USE_ORIGIN
